@@ -1,0 +1,8 @@
+provider:
+  name: faas
+  gateway: https://faas.srv.locational.io
+functions:
+  longrun:
+    lang: node
+    handler: ./longrun
+    image: onlyjsmith/longrun:latest
