@@ -1,7 +1,7 @@
 FROM node:8.9.1-alpine
 
 RUN addgroup -S app && adduser app -S -G app
-RUN apk --no-cache add curl 
+RUN apk --no-cache add curl \
     && echo "Pulling watchdog binary from Github." \
     && curl -sSL https://github.com/openfaas/faas/releases/download/0.9.14/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog \
