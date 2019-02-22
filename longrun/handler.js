@@ -2,7 +2,7 @@
 
 module.exports = (context, callback) => {
   const params = JSON.parse(context)
-  const delay_s = params['delay_s'] || -1
+  const delay_s = params['delay_s'] || 10
 
   const start = new Date()
   const end = start.setSeconds(start.getSeconds() + delay_s)
