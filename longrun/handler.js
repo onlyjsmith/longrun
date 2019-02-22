@@ -23,7 +23,10 @@ module.exports = (context, callback) => {
   }
 
   callback(undefined, {
-    status: `done after ${delay_s} seconds`,
-    count: count,
+    function_status: 'success',
+    result: {
+      status: `done after ${delay_s} seconds`,
+      count: count,
+    }
   });
 }
