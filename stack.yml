@@ -5,4 +5,4 @@ functions:
   longrun:
     lang: node
     handler: ./longrun
-    image: onlyjsmith/longrun:0.0.1
+    image: onlyjsmith/longrun:0.0.2
