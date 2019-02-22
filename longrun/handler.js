@@ -3,13 +3,13 @@
 const DEFAULT_DELAY_S = 10
 const MAX_DELAY_S     = 120
 
-module.exports = (context) => {
+module.exports = (context, callback) => {
   let delay_s = DEFAULT_DELAY_S
   
   if (context) {
     const params = JSON.parse(context)
-    params_delay_s = params['delay_s']
-    if (typeof params_delay_s === 'string' && params_delay_s < MAX_DELAY_S) {
+    const params_delay_s = params['delay_s']
+    if (typeof params_delay_s === 'number' && params_delay_s < MAX_DELAY_S) {
       delay_s = params_delay_s
     }
   }
