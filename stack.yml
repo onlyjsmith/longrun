@@ -5,9 +5,10 @@ functions:
   longrun:
     lang: node
     handler: ./longrun
-    image: onlyjsmith/longrun:0.0.5
-    write_timeout: 57
-    read_timeout: 57
-    exec_timeout: 60
-    write_debug: true
-    combine_output: false
+    image: onlyjsmith/longrun:0.0.6
+    environment:
+      write_timeout: 57
+      read_timeout: 57
+      exec_timeout: 60
+      write_debug: true
+      combine_output: false
