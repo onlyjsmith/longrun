@@ -3,12 +3,6 @@ provider:
   gateway: https://faas.srv.locational.io
 functions:
   longrun:
-    lang: node
+    lang: dockerfile
     handler: ./longrun
     image: onlyjsmith/longrun:0.1.0
-    environment:
-      write_timeout: 57
-      read_timeout: 57
-      exec_timeout: 60
-      # write_debug: true
-      combine_output: false
