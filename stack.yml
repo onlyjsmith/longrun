@@ -4,5 +4,5 @@ provider:
 functions:
   longrun:
     lang: dockerfile
-    handler: ./longrun
+    handler: ./function
     image: onlyjsmith/longrun:0.1.0
