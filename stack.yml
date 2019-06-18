@@ -5,7 +5,7 @@ functions:
   longrun:
     lang: node
     handler: ./longrun
-    image: onlyjsmith/longrun:0.0.7
+    image: onlyjsmith/longrun:0.1.0
     environment:
       write_timeout: 57
       read_timeout: 57
