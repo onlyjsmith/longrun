@@ -1,6 +1,6 @@
 "use strict";
 
-const DEFAULT_DELAY_S = 3; // 10;
+const DEFAULT_DELAY_S = 10;
 const MAX_DELAY_S = 30;
 
 module.exports = (context, callback) => {
@@ -10,8 +10,13 @@ module.exports = (context, callback) => {
   let count = 0;
 
   try {
-    if (context) {
+    if (!context) {
+      throw new Error('No params passed. Need either `delay_s` or `force_error`')
+    } else {
+
       params = JSON.parse(context);
+
+      // Check allowed params
       const param_keys = Object.keys(params);
       param_keys.forEach(k => {
         if (!ALLOWED_PARAMS.includes(k)) {
@@ -29,6 +34,10 @@ module.exports = (context, callback) => {
         } else if (typeof params_delay_s !== "number") {
           throw new Error(`Param 'delay_s' provided, but is not a number >= 0 and <= ${MAX_DELAY_S}`);
         }
+      }
+
+      if (!params_delay_s) {
+        throw new Error('Param \'delay_s\' required. No longer defaults to anything without it.')
       }
       
       // Check for force_error param
