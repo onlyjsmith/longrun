@@ -37,7 +37,6 @@ module.exports = (context, callback) => {
           throw new Error(
             `Param 'delay_s' set longer than allowed maximum of ${MAX_DELAY_S} seconds`
           );
-          q;
         } else if (typeof params_delay_s !== "number") {
           throw new Error(
             `Param 'delay_s' provided, but is not a number >= 0 and <= ${MAX_DELAY_S}`
@@ -58,7 +57,7 @@ module.exports = (context, callback) => {
     }
 
     const start = new Date();
-    const end = start.setMilliseconds(start.getMilliseconds() + (delay_s * 1000));
+    const end = start.setMilliseconds(start.getMilliseconds() + delay_s * 1000);
 
     while (+new Date() < end) {
       count = count + 1;
