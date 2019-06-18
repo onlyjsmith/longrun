@@ -14,9 +14,9 @@ module.exports = (context, callback) => {
       
       // Check for delay_s param
       const params_delay_s = params["delay_s"];
-      if (typeof params_delay_s === "number" && params_delay_s < MAX_DELAY_S) {
+      if (typeof params_delay_s === "number" && params_delay_s <= MAX_DELAY_S) {
         delay_s = params_delay_s;
-      } else if (params_delay_s >= MAX_DELAY_S) {
+      } else if (params_delay_s > MAX_DELAY_S) {
         throw new Error(`Param 'delay_s' set longer than allowed maximum of ${MAX_DELAY_S} seconds`)
       }
       
