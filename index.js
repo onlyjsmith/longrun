@@ -2,36 +2,38 @@
 // Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-"use strict"
+"use strict";
 
-const getStdin = require('get-stdin');
+const getStdin = require("get-stdin");
 
-const handler = require('./function/handler');
+const handler = require("./function/handler");
 
-getStdin().then(val => {
+getStdin()
+  .then(val => {
     handler(val, (err, res) => {
-        if (err) {
-            return console.error(err);
-        }
+      if (err) {
+        return console.error(err);
+      }
 
-        if (!res) {
-            return;
-        }
+      if (!res) {
+        return;
+      }
 
-        if (isArray(res) || isObject(res)) {
-            console.log(JSON.stringify(res));
-        } else {
-            process.stdout.write(res);
-        }
+      if (isArray(res) || isObject(res)) {
+        console.log(JSON.stringify(res));
+      } else {
+        process.stdout.write(res);
+      }
     });
-}).catch(e => {
+  })
+  .catch(e => {
     console.error(e.stack);
-});
+  });
 
-const isArray = (a) => {
-    return (!!a) && (a.constructor === Array);
+const isArray = a => {
+  return !!a && a.constructor === Array;
 };
 
-const isObject = (a) => {
-    return (!!a) && (a.constructor === Object);
+const isObject = a => {
+  return !!a && a.constructor === Object;
 };

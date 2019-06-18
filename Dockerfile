@@ -29,7 +29,6 @@ COPY index.js ./
 # COPY function node packages and install, adding this as a separate
 # entry allows caching of npm install runtime dependencies
 WORKDIR /home/app/function
-COPY function/*.json ./
 RUN npm i --production || :
 
 # Copy in additional function files and folders
@@ -46,6 +45,13 @@ USER app
 
 ENV cgi_headers="true"
 ENV fprocess="node index.js"
+
+ENV combine_output='false'
+ENV write_debug="true"
+ENV write_timeout=100
+ENV read_timeout=100
+ENV exec_timeout=100
+
 EXPOSE 8080
 
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
