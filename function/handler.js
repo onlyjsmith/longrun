@@ -1,8 +1,9 @@
 "use strict";
 
 module.exports = (context, callback) => {
-  const DEFAULT_DELAY_S = 10;
   const MAX_DELAY_S = 30;
+  const MIN_DELAY_S = 0;
+  const DEFAULT_DELAY_S = 10;
   const ALLOWED_PARAMS = ["delay_s", "force_error"];
 
   let delay_s = DEFAULT_DELAY_S;
@@ -14,46 +15,45 @@ module.exports = (context, callback) => {
       throw new Error(
         "No params passed. Need either `delay_s` or `force_error`"
       );
-    } else {
-      params = JSON.parse(context);
+    }
 
-      // Check allowed params
-      const param_keys = Object.keys(params);
-      param_keys.forEach(k => {
-        if (!ALLOWED_PARAMS.includes(k)) {
-          throw new Error(`Param '${k}' not allowed`);
-        }
-      });
+    params = JSON.parse(context);
 
-      // Checks for delay_s param
-      const params_delay_s = params["delay_s"];
-      if (params_delay_s) {
-        if (
-          typeof params_delay_s === "number" &&
-          params_delay_s <= MAX_DELAY_S
-        ) {
-          delay_s = params_delay_s;
-        } else if (params_delay_s > MAX_DELAY_S) {
-          throw new Error(
-            `Param 'delay_s' set longer than allowed maximum of ${MAX_DELAY_S} seconds`
-          );
-        } else if (typeof params_delay_s !== "number") {
-          throw new Error(
-            `Param 'delay_s' provided, but is not a number >= 0 and <= ${MAX_DELAY_S}`
-          );
-        }
+    // Check allowed params
+    const param_keys = Object.keys(params);
+    param_keys.forEach(k => {
+      if (!ALLOWED_PARAMS.includes(k)) {
+        throw new Error(`Param '${k}' not allowed`);
       }
+    });
 
-      if (!params_delay_s) {
+    // Checks for delay_s param
+    const params_delay_s = params["delay_s"];
+    if (params_delay_s) {
+      if (typeof params_delay_s === "number" && params_delay_s <= MAX_DELAY_S) {
+        delay_s = params_delay_s;
+      } else if (params_delay_s > MAX_DELAY_S) {
         throw new Error(
-          "Param 'delay_s' required. No longer defaults to anything without it."
+          `Param 'delay_s' set longer than allowed maximum of ${MAX_DELAY_S} seconds`
         );
+      } else if (params_delay_s < 0) {
+        throw new Error(
+          `Param 'delay_s' set shorter than allowed minimum of ${MIN_DELAY_S} seconds`
+        );
+      } else if (typeof params_delay_s !== "number") {
+        throw new Error(`Param 'delay_s' provided, but is not a number`);
       }
+    }
 
-      // Check for force_error param
-      if (!!params["force_error"]) {
-        throw new Error("Forcing throw by param");
-      }
+    if (!params_delay_s) {
+      throw new Error(
+        "Param 'delay_s' required. No longer defaults to anything without it."
+      );
+    }
+
+    // Check for force_error param
+    if (!!params["force_error"]) {
+      throw new Error("Forcing throw by param");
     }
 
     const start = new Date();
