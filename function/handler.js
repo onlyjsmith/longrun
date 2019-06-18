@@ -47,9 +47,9 @@ module.exports = (context, callback) => {
     }
 
     const start = new Date();
-    const end = start.setSeconds(start.getSeconds() + delay_s);
+    const end = start.setMilliseconds(start.getMilliseconds() + (delay_s * 1000));
 
-    while (new Date() < end) {
+    while (+new Date() < end) {
       count = count + 1;
     }
   } catch (error) {
