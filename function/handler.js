@@ -3,16 +3,15 @@
 module.exports = (context, callback) => {
   const MAX_DELAY_S = 30;
   const MIN_DELAY_S = 0;
-  const DEFAULT_DELAY_S = 10;
   const ALLOWED_PARAMS = ["delay_s"];
 
-  let delay_s = DEFAULT_DELAY_S;
   let params;
+  let params_delay_s;
   let count = 0;
 
   try {
     if (!context) {
-      throw new Error("No params passed. Need either `delay_s`");
+      throw new Error("Required param missing: \'delay_s\'");
     }
 
     params = JSON.parse(context);
@@ -26,9 +25,9 @@ module.exports = (context, callback) => {
     });
 
     // Checks for delay_s param
-    const params_delay_s = params["delay_s"];
-    
-    if (!params_delay_s) {
+    params_delay_s = params["delay_s"];
+
+    if (typeof params_delay_s === "undefined") {
       throw new Error(
         "Param 'delay_s' required. No longer defaults to anything without it."
       );
@@ -47,7 +46,9 @@ module.exports = (context, callback) => {
     }
 
     const start = new Date();
-    const end = start.setMilliseconds(start.getMilliseconds() + params_delay_s * 1000);
+    const end = start.setMilliseconds(
+      start.getMilliseconds() + params_delay_s * 1000
+    );
 
     while (+new Date() < end) {
       count = count + 1;
@@ -65,9 +66,9 @@ module.exports = (context, callback) => {
   return callback(undefined, {
     function_status: "success",
     result: {
+      count: count,
       params,
-      status: `done after ${delay_s} seconds`,
-      count: count
+      status: `done after ${params_delay_s} seconds`
     }
   });
 };
