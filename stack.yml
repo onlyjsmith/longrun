@@ -5,4 +5,4 @@ functions:
   longrun:
     lang: dockerfile
     handler: .
-    image: onlyjsmith/longrun:0.1.0
+    image: onlyjsmith/longrun:0.1.1
